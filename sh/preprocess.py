@@ -148,13 +148,11 @@ def lme_mask_rule():
 
     return make.Rule(action, [orca025_grid_nc, LMEs66_shp], [lme_mask_nc])
 
-## Get the two polygons we're interested in
-#polys = geopandas.GeoDataFrame.from_file(LMEs66_shp) 
-#polys[polys.LME_NAME.isin(['Gulf of Alaska', 'East Bering Sea'])]
-#mask = np.zeros((nlat,nlon), dtype='i')
-#mask[mask_df.j, mask_df.i] = mask_df.LME_NUMBER.astype('i')
 
+def main():
+    makefile = make.Makefile()
+    makefile.add(orca025_area_rule())
+    makefile.add(lme_mask_rule())
+    makefile.generate(os.path.join(config.HARNESS, 'output'), run=True)
 
-#to_shp()   
-#write_area_file()
-write_lme_mask()
+main()
