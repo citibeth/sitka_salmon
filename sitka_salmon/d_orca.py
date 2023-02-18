@@ -58,6 +58,7 @@ def orca025_area_rule():
 
 
         # Store it
+        os.makedirs(os.path.dirname(orca025_area_nc), exist_ok=True)
         with netCDF4.Dataset(orca025_area_nc, 'w') as nc:
             nc.createDimension('y', nlat)
             nc.createDimension('x', nlon)
@@ -136,6 +137,7 @@ def lme_mask_rule():
 
 
         # Store it
+        os.makedirs(os.path.dirname(lme_mask_nc), exist_ok=True)
         with netCDF4.Dataset(lme_mask_nc, 'w') as nc:
             nc.createDimension('y', nlat)
             nc.createDimension('x', nlon)
