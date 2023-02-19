@@ -131,7 +131,7 @@ def integrate_era5_rule(var):
     def action(tdir):
         #lmes = ['Gulf of Alaska', 'East Bering Sea', 'Aleutian Islands', 'West Bering Sea', 'Northern Bering - Chukchi Seas', 'Sea of Okhotsk', 'Oyashio Current', 'Kuroshio Current', 'Sea of Japan']
 
-        df = d_era5.var(var)
+        df = d_era5.compute_var(var)
         ofname = os.path.join(config.HARNESS, 'output', f'{var}.csv')
         df.to_csv(ofname, index=False)
 

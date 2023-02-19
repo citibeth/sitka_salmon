@@ -33,7 +33,7 @@ def parse_sheet(sheet):
     for icol0,headers in cheaders:
         # Fetch the data for this sub-table
         valss = list()
-        for row in rows[irow0:]:
+        for row in rows[irow0+1:]:
             # Empty line is end of data
             if row[0] is None:
                 break
@@ -45,7 +45,7 @@ def parse_sheet(sheet):
         df = pd.DataFrame(valss, columns=headers).set_index('Year')
         tables[species] = Table(
             title, species,
-            rows[irow0-2][0].strip(),    # description
+            rows[irow0-2][icol0].strip(),    # description
             df)
 
     return tables    
@@ -72,4 +72,4 @@ def get(born, age, measure, species):
     return get_subsheets(sheet_ix)[species]
 
 
-print(get('*', 'mature', 'abundance', 'chum'))
+#print(get('*', 'mature', 'abundance', 'chum'))

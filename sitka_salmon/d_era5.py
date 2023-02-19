@@ -39,7 +39,7 @@ def integrate_month(var, year, month, lmes):
         ret[lme] = np.sum(val * weights) / np.sum(weights)
     return ret
 
-def var(var, lmes=None):
+def compute_var(var, lmes=None):
     if lmes is None:
         lmes = list(d_lme.info().LME_NAME)
 
@@ -52,3 +52,7 @@ def var(var, lmes=None):
     return pd.DataFrame(rows)
 
 #=['Gulf of Alaska', 'East Bering Sea']
+
+def var(var):
+    ifname = os.path.join(config.HARNESS, 'output', f'{var}.csv')
+    return pd.read_csv(ifname)
