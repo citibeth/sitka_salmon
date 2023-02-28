@@ -1,3 +1,4 @@
+import functools
 import pandas as pd
 
 # Data obtained from:
@@ -172,16 +173,16 @@ data = [
     [2020, -1.41, -1.48, -1.75, -1.32, -0.53, -0.76, -0.92, -1.33, -1.04, -0.62, -1.59, -0.99],
     [2021, -0.61, -1.10, -1.68, -1.85, -2.01, -1.81, -1.96, -0.94, -1.96, -3.11, -2.75, -2.71],
     [2022, -2.40, -1.91, -1.67, -2.10, -2.25, -1.34, -2.62, -2.38, -2.29, -1.80, -2.41, -2.21],
-    [2023, -1.28, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99],
+#    [2023, -1.28, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99, 99.99],
 ]
 
-@functional.lru_cache()
-df monthly():
-    df = pd.DataFrame(data, columns=['Year',1,2,3,4,5,6,7,8,9,10,11,12])
-    df = pd.melt(df, id_vars=['year']).rename(columns={'variable':'month'})
+#@functools.lru_cache()
+def monthly():
+    df = pd.DataFrame(data, columns=['year',1,2,3,4,5,6,7,8,9,10,11,12])
+    df = pd.melt(df, id_vars=['year']).rename(columns={'variable':'month'}).rename(columns={'value':'pdo'})
     return df
 
-@functional.lru_cache()
+#@functools.lru_cache()
 def annual():
     df = monthly()
-    return df.groupby('year').mean().rename(columns={'value':'pdo'})
+    return df.groupby('year').mean()

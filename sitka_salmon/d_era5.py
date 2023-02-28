@@ -56,3 +56,31 @@ def compute_var(var, lmes=None):
 def var(var):
     ifname = os.path.join(config.HARNESS, 'output', f'{var}.csv')
     return pd.read_csv(ifname)
+
+def to_winter(climate):
+    # Winter
+    df = climate.copy()
+    df.loc[df['month']==12, 'year'] = df['year'] + 1
+    df = df[df.year >= 1960]
+    df = df[df.year <= 2014]
+    df = df[df.month.isin([12,1,2])]
+    return df.groupby('year').mean().drop(columns='month')
+
+def to_summer(climate):
+    # Summer
+    df = climate.copy()
+    df = df[df.month.isin([6,7,8])]
+    return df.groupby('year').mean().drop(columns='month')
+
+_to_season = {
+    'winter': to_winter,
+    'summer': to_summer,
+}
+
+def get(var, season):
+    """Loads seasonal variables into dataframe
+    var: Variable to load
+    season: winter|summer"""
+
+    ifname = os.path.join(config.HARNESS, 'output', f'{var}.csv')
+    return _to_season[season](pd.read_csv(ifname))
